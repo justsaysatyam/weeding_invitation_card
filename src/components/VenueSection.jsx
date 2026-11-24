@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion'
-import { GoldenDivider, MithilaLotus, PaisleyBorder, CornerOrnament } from './MithilaArt'
+import { GoldenDivider, MithilaLotus, PaisleyBorder, CornerOrnament, RoyalDiya } from './MithilaArt'
+
+const ROUTE_DIRECTIONS_URL =
+  'https://www.google.com/maps/dir/?api=1&origin=Jagatpur,+Madhubani,+Bihar&destination=Dehat,+Rajnagar,+Madhubani,+Bihar'
 
 export default function VenueSection() {
   return (
@@ -11,33 +14,44 @@ export default function VenueSection() {
         {/* Header */}
         <motion.div
           className="text-center mb-10"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className="flex justify-center gap-2 mb-3">
-            <CornerOrnament size={38} />
+          <div className="flex justify-center items-center gap-2 mb-3">
+            <RoyalDiya size={30} />
             <MithilaLotus size={34} />
-            <CornerOrnament size={38} flip />
+            <RoyalDiya size={30} />
           </div>
           <p
-            style={{ fontFamily: "'Cinzel', serif", color: '#D4AF37', fontSize: '10px', letterSpacing: '0.4em', marginBottom: '8px' }}
+            style={{
+              fontFamily: "'Cinzel', serif",
+              color: '#D4AF37',
+              fontSize: '10px',
+              letterSpacing: '0.4em',
+              marginBottom: '6px',
+            }}
           >
             FIND YOUR WAY
           </p>
           <h2
             className="section-title"
-            style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#F9F3E8', fontSize: '2.2rem' }}
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontStyle: 'italic',
+              color: '#F9F3E8',
+              fontSize: '2.2rem',
+            }}
           >
-            Venue &amp; Route Guide
+            Venue &amp; Baraat Route
           </h2>
           <GoldenDivider className="mt-4" />
         </motion.div>
 
         {/* Venue Cards */}
         <div className="space-y-6">
-          {/* Baraat Departure */}
+          {/* 1. Baraat Departure */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -67,17 +81,34 @@ export default function VenueSection() {
               </div>
               <div className="flex-1 min-w-0">
                 <p
-                  style={{ fontFamily: "'Cinzel', serif", fontSize: '9px', letterSpacing: '0.25em', color: '#D4AF37', marginBottom: '4px' }}
+                  style={{
+                    fontFamily: "'Cinzel', serif",
+                    fontSize: '9px',
+                    letterSpacing: '0.25em',
+                    color: '#D4AF37',
+                    marginBottom: '4px',
+                  }}
                 >
                   BARAAT DEPARTURE · 09 DEC 2026
                 </p>
                 <h3
-                  style={{ fontFamily: "'Cinzel', serif", fontWeight: 700, fontSize: '1.1rem', color: '#F9F3E8', marginBottom: '2px' }}
+                  style={{
+                    fontFamily: "'Cinzel', serif",
+                    fontWeight: 700,
+                    fontSize: '1.1rem',
+                    color: '#F9F3E8',
+                    marginBottom: '2px',
+                  }}
                 >
                   Baraat Prasthan
                 </h3>
                 <p
-                  style={{ fontFamily: "'Great Vibes', cursive", fontSize: '1.6rem', color: '#D4AF37', marginBottom: '10px' }}
+                  style={{
+                    fontFamily: "'Great Vibes', cursive",
+                    fontSize: '1.6rem',
+                    color: '#D4AF37',
+                    marginBottom: '10px',
+                  }}
                 >
                   Dulha Ka Ghar
                 </p>
@@ -86,7 +117,14 @@ export default function VenueSection() {
                   style={{ background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.2)' }}
                 >
                   <p
-                    style={{ fontFamily: "'Cinzel', serif", fontSize: '9px', letterSpacing: '0.15em', color: '#D4AF37', marginBottom: '4px', fontWeight: 600 }}
+                    style={{
+                      fontFamily: "'Cinzel', serif",
+                      fontSize: '9px',
+                      letterSpacing: '0.15em',
+                      color: '#D4AF37',
+                      marginBottom: '4px',
+                      fontWeight: 600,
+                    }}
                   >
                     📍 GROOM'S RESIDENCE
                   </p>
@@ -98,25 +136,60 @@ export default function VenueSection() {
                   </p>
                 </div>
                 <p
-                  style={{ fontFamily: "'Poppins', sans-serif", fontSize: '11px', color: '#D4AF37', opacity: 0.75, fontStyle: 'italic', marginTop: '10px' }}
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: '11px',
+                    color: '#D4AF37',
+                    opacity: 0.75,
+                    fontStyle: 'italic',
+                    marginTop: '10px',
+                  }}
                 >
-                  Procession departs with dhol &amp; celebrations 🎉
+                  Royal procession departs with dhol-nagara &amp; celebratory cheers 🎉
                 </p>
               </div>
             </div>
           </motion.div>
 
-          {/* Connector Arrow */}
-          <div className="flex flex-col items-center gap-1 py-1">
-            <span style={{ color: '#D4AF37', fontSize: '1.3rem', lineHeight: 1 }}>↓</span>
+          {/* 2. Interactive Route Connector with Directions Button */}
+          <div className="rounded-2xl p-4 text-center border border-gold/30"
+            style={{ background: 'linear-gradient(135deg, rgba(88,11,24,0.6), rgba(61,7,16,0.8))' }}>
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <span className="text-sm">📍 Jagatpur</span>
+              <span className="text-gold font-bold">━━━━ 🚗 ~18 KM ━━━━▶</span>
+              <span className="text-sm">📍 Dehat, Rajnagar</span>
+            </div>
             <p
-              style={{ fontFamily: "'Cinzel', serif", fontSize: '8px', letterSpacing: '0.2em', color: '#D4AF37', opacity: 0.7 }}
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: '11px',
+                color: '#E8C84A',
+                opacity: 0.85,
+                marginBottom: '10px',
+              }}
             >
-              BARAAT PROCESSION TRAVELS TO DULHAN'S VILLAGE
+              Scenic Royal Baraat Journey from Jagatpur to Rajnagar
             </p>
+            <a
+              href={ROUTE_DIRECTIONS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full font-bold transition-all hover:scale-105 active:scale-95"
+              style={{
+                fontFamily: "'Cinzel', serif",
+                fontSize: '10px',
+                letterSpacing: '0.1em',
+                padding: '8px 18px',
+                background: 'rgba(212,175,55,0.2)',
+                border: '1px solid rgba(212,175,55,0.6)',
+                color: '#F5E06A',
+              }}
+            >
+              🧭 Get Route Directions in Google Maps
+            </a>
           </div>
 
-          {/* Wedding Venue */}
+          {/* 3. Wedding Venue */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -146,17 +219,34 @@ export default function VenueSection() {
               </div>
               <div className="flex-1 min-w-0">
                 <p
-                  style={{ fontFamily: "'Cinzel', serif", fontSize: '9px', letterSpacing: '0.25em', color: '#D4AF37', marginBottom: '4px' }}
+                  style={{
+                    fontFamily: "'Cinzel', serif",
+                    fontSize: '9px',
+                    letterSpacing: '0.25em',
+                    color: '#D4AF37',
+                    marginBottom: '4px',
+                  }}
                 >
                   WEDDING CEREMONY · 09 DEC 2026
                 </p>
                 <h3
-                  style={{ fontFamily: "'Cinzel', serif", fontWeight: 700, fontSize: '1.1rem', color: '#F9F3E8', marginBottom: '2px' }}
+                  style={{
+                    fontFamily: "'Cinzel', serif",
+                    fontWeight: 700,
+                    fontSize: '1.1rem',
+                    color: '#F9F3E8',
+                    marginBottom: '2px',
+                  }}
                 >
                   Shubh Vivah
                 </h3>
                 <p
-                  style={{ fontFamily: "'Great Vibes', cursive", fontSize: '1.6rem', color: '#D4AF37', marginBottom: '10px' }}
+                  style={{
+                    fontFamily: "'Great Vibes', cursive",
+                    fontSize: '1.6rem',
+                    color: '#D4AF37',
+                    marginBottom: '10px',
+                  }}
                 >
                   Dulhan Ka Ghar
                 </p>
@@ -165,7 +255,14 @@ export default function VenueSection() {
                   style={{ background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.25)' }}
                 >
                   <p
-                    style={{ fontFamily: "'Cinzel', serif", fontSize: '9px', letterSpacing: '0.15em', color: '#D4AF37', marginBottom: '4px', fontWeight: 600 }}
+                    style={{
+                      fontFamily: "'Cinzel', serif",
+                      fontSize: '9px',
+                      letterSpacing: '0.15em',
+                      color: '#D4AF37',
+                      marginBottom: '4px',
+                      fontWeight: 600,
+                    }}
                   >
                     📍 MARRIAGE VENUE (DULHAN HOUSE)
                   </p>
@@ -200,7 +297,14 @@ export default function VenueSection() {
                 </a>
 
                 <p
-                  style={{ fontFamily: "'Poppins', sans-serif", fontSize: '11px', color: '#D4AF37', opacity: 0.75, fontStyle: 'italic', marginTop: '12px' }}
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: '11px',
+                    color: '#D4AF37',
+                    opacity: 0.75,
+                    fontStyle: 'italic',
+                    marginTop: '12px',
+                  }}
                 >
                   Sacred wedding mandap under marigold canopy ✨
                 </p>

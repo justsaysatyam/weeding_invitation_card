@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import OpeningCurtain from './components/OpeningCurtain'
@@ -7,8 +7,10 @@ import AudioPlayer from './components/AudioPlayer'
 import HeroSection from './components/HeroSection'
 import BrideGroomShowcase from './components/BrideGroomShowcase'
 import Timeline from './components/Timeline'
+import Saptapadi from './components/Saptapadi'
 import VenueSection from './components/VenueSection'
 import SpotlightGallery from './components/SpotlightGallery'
+import AashirvaadButton from './components/AashirvaadButton'
 import Footer from './components/Footer'
 
 export default function App() {
@@ -17,55 +19,75 @@ export default function App() {
   const [playAudio, setPlayAudio] = useState(false)
 
   const handleOpen = () => {
-    // Trigger petal shower
+    // 1. Trigger golden petal shower
     setPetalActive(true)
-    // Trigger audio play (user gesture bypass)
+    // 2. Trigger audio playback via user gesture
     setPlayAudio(true)
-    // Unlock scroll
+    // 3. Unlock document scrolling
     document.body.classList.remove('locked')
-    // Open invitation after brief petal moment
-    setTimeout(() => setOpened(true), 200)
-    // Stop petal shower after 6 seconds
-    setTimeout(() => setPetalActive(false), 7000)
+    // 4. Reveal content smoothly after 3D palace door opening swing
+    setTimeout(() => setOpened(true), 1100)
+    // 5. Calm down petal shower after 8 seconds
+    setTimeout(() => setPetalActive(false), 8000)
+  }
+
+  const triggerAashirvaadShower = () => {
+    setPetalActive(true)
+    setTimeout(() => setPetalActive(false), 5000)
   }
 
   return (
     <div className="relative min-h-screen font-poppins" style={{ background: '#FDFBF7' }}>
-      {/* Petal shower overlay */}
+      {/* Golden flower petal shower overlay */}
       <PetalShower active={petalActive} />
 
-      {/* Floating audio control */}
+      {/* Floating royal audio player */}
       <AudioPlayer shouldPlay={playAudio} />
 
-      {/* Opening curtain */}
+      {/* 3D Grand Royal Palace Darwaza Door Opening Reveal */}
       <AnimatePresence>
         {!opened && (
           <motion.div
             key="curtain"
-            exit={{
-              clipPath: ['inset(0% 0% 0% 0%)', 'inset(0% 50% 0% 50%)', 'inset(0% 100% 0% 0%)'],
-              opacity: [1, 1, 0],
-              transition: { duration: 1.2, ease: 'easeInOut' }
-            }}>
+            exit={{ opacity: 0, transition: { duration: 0.6 } }}
+          >
             <OpeningCurtain onOpen={handleOpen} />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main invitation content */}
+      {/* Main Wedding Invitation Website */}
       <AnimatePresence>
         {opened && (
           <motion.main
             key="main"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}>
+            transition={{ duration: 0.8 }}
+          >
+            {/* 1. Auspicious Shlokas + Couple Arch + Ticking Countdown + Calendar CTA */}
             <HeroSection />
+
+            {/* 2. Bride & Groom Royal Portraits */}
             <BrideGroomShowcase />
+
+            {/* 3. Four-Day Wedding Functions Timeline */}
             <Timeline />
+
+            {/* 4. Saptapadi — Seven Sacred Vows of Mithila */}
+            <Saptapadi />
+
+            {/* 5. Venue Guide & Jagatpur to Rajnagar Baraat Route Directions */}
             <VenueSection />
+
+            {/* 6. Spotlight Lightbox Photo Gallery */}
             <SpotlightGallery />
+
+            {/* 7. Jha Family Blessings & Direct Phone/WhatsApp Contact */}
             <Footer />
+
+            {/* 8. Interactive Floating "आशीर्वाद दें" (Shower Petals) Action Button */}
+            <AashirvaadButton onShower={triggerAashirvaadShower} />
           </motion.main>
         )}
       </AnimatePresence>

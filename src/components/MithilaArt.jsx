@@ -211,3 +211,73 @@ export const FloralArchSVG = ({ className = '' }) => (
   </svg>
 )
 
+export const GaneshaMotif = ({ size = 64, className = '' }) => (
+  <svg width={size} height={size} viewBox="0 0 100 100" className={className} xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="ganeshaGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#F5E06A" />
+        <stop offset="50%" stopColor="#D4AF37" />
+        <stop offset="100%" stopColor="#B8942A" />
+      </linearGradient>
+    </defs>
+    {/* Crown (Mukut) */}
+    <path d="M 40 22 L 50 8 L 60 22 Z" fill="url(#ganeshaGold)" />
+    <circle cx="50" cy="8" r="3" fill="#F59E0B" />
+    <path d="M 36 24 L 64 24 L 60 29 L 40 29 Z" fill="url(#ganeshaGold)" />
+    {/* Forehead & Tilak */}
+    <ellipse cx="50" cy="36" rx="14" ry="9" fill="url(#ganeshaGold)" opacity="0.9" />
+    <path d="M 47 30 Q 50 38 53 30" stroke="#580B18" strokeWidth="2" fill="none" />
+    <circle cx="50" cy="33" r="2" fill="#580B18" />
+    {/* Ears */}
+    <path d="M 36 33 C 24 33, 22 48, 35 52 C 37 46, 38 40, 38 36 Z" fill="url(#ganeshaGold)" />
+    <path d="M 64 33 C 76 33, 78 48, 65 52 C 63 46, 62 40, 62 36 Z" fill="url(#ganeshaGold)" />
+    {/* Trunk (Sund) */}
+    <path d="M 47 42 Q 46 58 54 64 Q 60 67 63 62 Q 65 56 59 58 Q 54 58 52 46 Z" fill="url(#ganeshaGold)" />
+    {/* Tusk */}
+    <path d="M 44 48 L 40 54 L 46 51 Z" fill="#FFF" />
+    {/* Modak in trunk */}
+    <circle cx="63" cy="62" r="4" fill="#F59E0B" stroke="#D4AF37" strokeWidth="1" />
+    {/* Lotus Base */}
+    <ellipse cx="50" cy="82" rx="20" ry="5" fill="#D4AF37" opacity="0.6" />
+    <path d="M 34 82 Q 50 90 66 82 Q 50 78 34 82" fill="url(#ganeshaGold)" />
+  </svg>
+)
+
+export const RoyalDiya = ({ size = 48, className = '' }) => (
+  <svg width={size} height={size} viewBox="0 0 80 80" className={className} xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="flameGrad" x1="50%" y1="100%" x2="50%" y2="0%">
+        <stop offset="0%" stopColor="#580B18" />
+        <stop offset="30%" stopColor="#F59E0B" />
+        <stop offset="70%" stopColor="#FDE047" />
+        <stop offset="100%" stopColor="#FFFFFF" />
+      </linearGradient>
+      <radialGradient id="diyaGlow" cx="50%" cy="40%" r="50%">
+        <stop offset="0%" stopColor="#FDE047" stopOpacity="0.8" />
+        <stop offset="60%" stopColor="#F59E0B" stopOpacity="0.3" />
+        <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
+      </radialGradient>
+      <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#F5E06A" />
+        <stop offset="50%" stopColor="#D4AF37" />
+        <stop offset="100%" stopColor="#8a6e1a" />
+      </linearGradient>
+    </defs>
+    {/* Aura glow */}
+    <circle cx="40" cy="34" r="22" fill="url(#diyaGlow)" />
+    {/* Animated flame */}
+    <path d="M 40 16 Q 47 28 44 38 Q 40 44 36 38 Q 33 28 40 16 Z" fill="url(#flameGrad)">
+      <animate attributeName="d"
+        values="M 40 16 Q 47 28 44 38 Q 40 44 36 38 Q 33 28 40 16 Z;
+                M 40 14 Q 49 26 45 38 Q 40 45 35 38 Q 31 26 40 14 Z;
+                M 40 16 Q 47 28 44 38 Q 40 44 36 38 Q 33 28 40 16 Z"
+        dur="1.8s" repeatCount="indefinite" />
+    </path>
+    {/* Diya Clay/Brass Pot */}
+    <path d="M 20 44 C 20 60, 60 60, 60 44 C 55 48, 25 48, 20 44 Z" fill="url(#brassGrad)" stroke="#580B18" strokeWidth="1" />
+    {/* Base stand */}
+    <path d="M 32 58 L 48 58 L 52 64 L 28 64 Z" fill="url(#brassGrad)" />
+  </svg>
+)
+
+
