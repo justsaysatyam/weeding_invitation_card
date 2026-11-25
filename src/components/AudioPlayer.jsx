@@ -59,7 +59,7 @@ export default function AudioPlayer({ shouldPlay }) {
 
   return (
     <>
-      <audio ref={audioRef} src="/audio/shehnai.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/audio/mangal_rang.mp3" loop preload="auto" />
       <button
         onClick={toggleSound}
         title={muted ? 'Play Music' : 'Mute Music'}
