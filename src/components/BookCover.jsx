@@ -149,9 +149,29 @@ export default function BookCover({ onOpen }) {
             }}
           />
 
-          {/* Sacred Ganesha Emblem */}
-          <div style={{ marginBottom: '1.25rem', transform: 'scale(1.05)' }}>
-            <GaneshaCrest />
+          {/* Sacred HD 3D Gold Ganesha Emblem */}
+          <div
+            style={{
+              width: '105px',
+              height: '105px',
+              margin: '0 auto 1rem',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.4), 0 0 0 2px rgba(212,175,55,0.7)',
+              border: '2px solid #FFF2B2',
+              position: 'relative',
+            }}
+          >
+            <img
+              src="/images/ganpati_gold.jpg"
+              alt="Lord Ganesha"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+              }}
+            />
           </div>
 
           {/* Shloka */}

@@ -9,6 +9,7 @@ const functionsData = [
     dateTime: 'SUN • 07 DEC • 6:00 PM ONWARDS',
     venue: 'Jha Residence, Vill + PO Jagatpur, Madhubani',
     headerBg: 'linear-gradient(135deg, #FF8C42 0%, #F57C00 100%)',
+    image: '/images/fest_feast.jpg',
     dressCode: 'Traditional Festive',
     dressColor: '#F57C00',
     icon: (
@@ -28,6 +29,7 @@ const functionsData = [
     dateTime: 'MON • 08 DEC • 10:00 AM ONWARDS',
     venue: 'Jha Residence Courtyard, Vill Jagatpur, Madhubani',
     headerBg: 'linear-gradient(135deg, #FFD54F 0%, #FFB300 100%)',
+    image: '/images/fest_haldi.jpg',
     dressCode: 'Wear Yellow / Green',
     dressColor: '#FBC02D',
     icon: (
@@ -47,6 +49,7 @@ const functionsData = [
     dateTime: 'WED • 09 DEC • MORNING 9:00 AM',
     venue: 'From Jagatpur to Dehat, Block Rajnagar',
     headerBg: 'linear-gradient(135deg, #3F51B5 0%, #1A237E 100%)',
+    image: '/images/fest_baraat.jpg',
     dressCode: 'Royal Sherwani / Kurta',
     dressColor: '#3F51B5',
     icon: (
@@ -65,6 +68,7 @@ const functionsData = [
     dateTime: 'WED • 09 DEC • SHUBH MUHURAT',
     venue: 'Vill + PO Dehat, Block Rajnagar, Dist Madhubani',
     headerBg: 'linear-gradient(135deg, #8B1A2A 0%, #4A0404 100%)',
+    image: '/images/fest_vivah.jpg',
     dressCode: 'Bridal & Traditional Silk',
     dressColor: '#8B1A2A',
     icon: (
@@ -173,31 +177,53 @@ export default function FestivitiesCarousel() {
               flexDirection: 'column',
             }}
           >
-            {/* Colorful Top Banner with Circular Floating Icon */}
+            {/* Rich Illustrated Top Banner with Circular Floating Icon */}
             <div
               style={{
                 background: f.headerBg,
-                height: '110px',
+                height: '145px',
                 position: 'relative',
+                overflow: 'hidden',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
+              {f.image && (
+                <img
+                  src={f.image}
+                  alt={f.title}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block',
+                  }}
+                />
+              )}
+              {/* Soft bottom vignette overlay */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.3) 100%)',
+                }}
+              />
               {/* Floating circular icon badge */}
               <div
                 style={{
                   position: 'absolute',
-                  bottom: '-24px',
-                  width: '56px',
-                  height: '56px',
+                  bottom: '-22px',
+                  width: '52px',
+                  height: '52px',
                   borderRadius: '50%',
                   background: '#FFFFFF',
-                  boxShadow: '0 6px 16px rgba(0,0,0,0.12)',
+                  boxShadow: '0 6px 16px rgba(0,0,0,0.15)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: '2px solid #FFF',
+                  border: '2.5px solid #FFF',
+                  zIndex: 2,
                 }}
               >
                 {f.icon}
