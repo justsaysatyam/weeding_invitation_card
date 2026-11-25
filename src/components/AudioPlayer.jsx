@@ -1,92 +1,83 @@
-import { useRef, useState, useEffect } from 'react'
-import { Volume2, VolumeX } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Volume2, VolumeX, Music } from 'lucide-react'
 
-// Free shehnai/Indian instrumental — multiple fallback sources
-const AUDIO_SOURCES = [
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // fallback placeholder
-  '/audio/shehnai.mp3',
-]
-
-export default function AudioPlayer({ shouldPlay, onReady }) {
-  const audioRef = useRef(null)
+export default function AudioPlayer({ shouldPlay }) {
+  const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(false)
-  const [loaded, setLoaded] = useState(false)
+  const audioRef = useRef(null)
+  const hasStarted = useRef(false)
 
   useEffect(() => {
-    const audio = new Audio()
-    audio.loop = true
-    audio.volume = 0
+    const audio = audioRef.current
+    if (!audio) return
 
-    // Try loading sources in order
-    const trySource = (index) => {
-      if (index >= AUDIO_SOURCES.length) return
-      audio.src = AUDIO_SOURCES[index]
-      audio.load()
-    }
-    trySource(0)
-
-    audio.addEventListener('canplaythrough', () => {
-      setLoaded(true)
-      if (onReady) onReady(audio)
-    })
-    audio.addEventListener('error', () => trySource(1))
-
-    audioRef.current = audio
-
-    // Attempt autoplay (browser may block this — handled by gesture in curtain)
-    audio.play().then(() => {
-      fadeIn(audio)
-    }).catch(() => {
-      // Will be triggered by user gesture instead
-    })
-
-    return () => {
-      audio.pause()
-      audio.src = ''
-    }
-  }, [])
-
-  const fadeIn = (audio) => {
-    let vol = 0
-    const id = setInterval(() => {
-      vol = Math.min(vol + 0.02, 0.5)
-      audio.volume = vol
-      if (vol >= 0.5) clearInterval(id)
-    }, 100)
-  }
-
-  useEffect(() => {
-    if (shouldPlay && audioRef.current) {
-      audioRef.current.play().then(() => fadeIn(audioRef.current)).catch(() => {})
+    if (shouldPlay && !hasStarted.current) {
+      hasStarted.current = true
+      audio.volume = 0
+      audio.loop = true
+      const playPromise = audio.play()
+      if (playPromise) {
+        playPromise
+          .then(() => {
+            setPlaying(true)
+            // Fade in volume
+            let vol = 0
+            const fade = setInterval(() => {
+              vol = Math.min(vol + 0.05, 0.4)
+              audio.volume = vol
+              if (vol >= 0.4) clearInterval(fade)
+            }, 150)
+          })
+          .catch(() => {
+            // Autoplay blocked — user will need to tap manually
+          })
+      }
     }
   }, [shouldPlay])
 
-  const toggle = () => {
-    if (!audioRef.current) return
-    if (muted) {
-      audioRef.current.muted = false
-      setMuted(false)
-    } else {
-      audioRef.current.muted = true
-      setMuted(true)
+  const toggleMute = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (!hasStarted.current) {
+      hasStarted.current = true
+      audio.volume = 0.35
+      audio.loop = true
+      audio.play().then(() => setPlaying(true)).catch(() => {})
     }
+    audio.muted = !audio.muted
+    setMuted(audio.muted)
   }
 
   return (
-    <button
-      onClick={toggle}
-      className="fixed top-4 right-4 z-[1000] w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
-      style={{
-        background: 'linear-gradient(135deg, #D4AF37 0%, #F5E06A 50%, #B8942A 100%)',
-        boxShadow: '0 4px 15px rgba(212,175,55,0.5)',
-      }}
-      title={muted ? 'Unmute Music' : 'Mute Music'}
-    >
-      {muted
-        ? <VolumeX size={18} className="text-maroon" color="#580B18" />
-        : <Volume2 size={18} className="text-maroon" color="#580B18" />
-      }
-    </button>
+    <>
+      <audio ref={audioRef} src="/audio/shehnai.mp3" loop preload="auto" />
+      <button
+        onClick={toggleMute}
+        title={muted ? 'Unmute Music' : 'Mute Music'}
+        style={{
+          position: 'fixed',
+          top: '1rem',
+          right: '1rem',
+          zIndex: 99999,
+          width: '48px',
+          height: '48px',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #D4AF37, #F3E5AB)',
+          border: '2px solid rgba(74,4,4,0.3)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          boxShadow: '0 4px 15px rgba(212,175,55,0.5)',
+          animation: 'floatBob 3s ease-in-out infinite',
+        }}
+      >
+        {muted ? (
+          <VolumeX size={20} color="#4A0404" />
+        ) : (
+          <Volume2 size={20} color="#4A0404" />
+        )}
+      </button>
+    </>
   )
 }
-

@@ -1,188 +1,299 @@
 @import "tailwindcss";
 
-/* ══════════════════════════════════════════════
-   THEME TOKENS (Tailwind v4)
-══════════════════════════════════════════════ */
-@theme {
-  --font-family-cinzel: 'Cinzel', serif;
-  --font-family-playfair: 'Playfair Display', serif;
-  --font-family-vibes: 'Great Vibes', cursive;
-  --font-family-poppins: 'Poppins', sans-serif;
+/* ===== GOOGLE FONTS ===== */
+/* Loaded via index.html: Cinzel, Playfair Display, Poppins */
 
-  --color-ivory: #FDFBF7;
-  --color-maroon: #580B18;
-  --color-maroon-light: #7a1020;
-  --color-maroon-dark: #3d0710;
-  --color-gold: #D4AF37;
-  --color-gold-light: #E8C84A;
-  --color-gold-dark: #B8942A;
-  --color-gold-warm: #F59E0B;
-  --color-mehendi: #15803D;
-  --color-marigold: #F59E0B;
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+  --maroon-deep: #4A0404;
+  --maroon-mid: #6B0F1A;
+  --maroon-light: #8B1A2A;
+  --gold-primary: #D4AF37;
+  --gold-light: #F3E5AB;
+  --gold-pale: #FFF8DC;
+  --blush-light: #FFF5F5;
+  --blush-mid: #FCE4EC;
+  --blush-dark: #F8BBD0;
 }
 
-/* ══════════════════════════════════════════════
-   BASE RESETS
-══════════════════════════════════════════════ */
-@layer base {
-  *, *::before, *::after { box-sizing: border-box; }
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: #FDFBF7;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-  body.locked { overflow: hidden; }
-  img { max-width: 100%; display: block; }
+/* ===== BASE RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-/* ══════════════════════════════════════════════
-   FONT UTILITY CLASSES  (always win over Tailwind)
-══════════════════════════════════════════════ */
-.font-cinzel   { font-family: 'Cinzel', serif !important; }
-.font-playfair { font-family: 'Playfair Display', serif !important; }
-.font-vibes    { font-family: 'Great Vibes', cursive !important; }
-.font-poppins  { font-family: 'Poppins', sans-serif !important; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
 
-/* ══════════════════════════════════════════════
-   GOLD TEXT GRADIENTS
-══════════════════════════════════════════════ */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--blush-light);
+  color: var(--maroon-deep);
+  overflow-x: hidden;
+}
+
+/* ===== FONT UTILITY CLASSES ===== */
+.font-cinzel {
+  font-family: 'Cinzel', 'Times New Roman', serif !important;
+}
+.font-playfair {
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+.font-poppins {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* ===== GOLD TEXT GRADIENT ===== */
 .text-gold-gradient {
-  background: linear-gradient(135deg, #D4AF37 0%, #F5E06A 30%, #D4AF37 55%, #B8942A 80%, #E8C84A 100%);
-  background-size: 200% auto;
+  background: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 40%, #D4AF37 60%, #B8860B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.text-gold-shimmer {
-  background: linear-gradient(90deg, #B8942A 0%, #F5E06A 25%, #D4AF37 50%, #F5E06A 75%, #B8942A 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 3s linear infinite;
-}
-
-/* ══════════════════════════════════════════════
-   KEYFRAMES
-══════════════════════════════════════════════ */
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-12px); }
-}
+/* ===== KEYFRAMES ===== */
 @keyframes petalFall {
-  0%   { transform: translateY(-60px) rotate(0deg) scale(1); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(720deg) scale(0.4); opacity: 0; }
-}
-@keyframes pulseGold {
-  0%, 100% { box-shadow: 0 0 15px rgba(212,175,55,0.35), 0 0 30px rgba(212,175,55,0.1); }
-  50%       { box-shadow: 0 0 35px rgba(212,175,55,0.75), 0 0 60px rgba(212,175,55,0.35); }
-}
-@keyframes borderGlow {
-  0%, 100% { opacity: 0.5; }
-  50%       { opacity: 1; }
-}
-@keyframes countDigit {
-  0%   { transform: translateY(0); }
-  10%  { transform: translateY(-4px); }
-  20%  { transform: translateY(0); }
-  100% { transform: translateY(0); }
+  0%   { transform: translateY(-10vh) rotate(0deg) translateX(0px); opacity: 1; }
+  25%  { transform: translateY(25vh) rotate(90deg) translateX(20px); opacity: 0.9; }
+  50%  { transform: translateY(50vh) rotate(180deg) translateX(-20px); opacity: 0.8; }
+  75%  { transform: translateY(75vh) rotate(270deg) translateX(15px); opacity: 0.6; }
+  100% { transform: translateY(110vh) rotate(360deg) translateX(-10px); opacity: 0; }
 }
 
-/* ══════════════════════════════════════════════
-   COMPONENT HELPERS
-══════════════════════════════════════════════ */
-.petal {
+@keyframes shimmerGold {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(212,175,55,0.4); }
+  50%       { box-shadow: 0 0 25px rgba(212,175,55,0.9), 0 0 50px rgba(212,175,55,0.4); }
+}
+
+@keyframes pulseText {
+  0%, 100% { opacity: 0.7; letter-spacing: 0.25em; }
+  50%       { opacity: 1; letter-spacing: 0.35em; }
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes scaleIn {
+  0%   { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideUp {
+  0%   { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes tasselSway {
+  0%, 100% { transform: rotate(-3deg); }
+  50%       { transform: rotate(3deg); }
+}
+
+@keyframes scrollUnroll {
+  0%   { max-height: 0; opacity: 0; }
+  100% { max-height: 1000px; opacity: 1; }
+}
+
+@keyframes confettiPop {
+  0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+}
+
+/* ===== UTILITY ANIMATIONS ===== */
+.animate-float    { animation: floatBob 3s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+.animate-pulse-text { animation: pulseText 2s ease-in-out infinite; }
+.animate-shimmer {
+  background: linear-gradient(90deg, #D4AF37 0%, #F3E5AB 30%, #D4AF37 50%, #F3E5AB 70%, #D4AF37 100%);
+  background-size: 200% auto;
+  animation: shimmerGold 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.animate-sway { animation: tasselSway 2.5s ease-in-out infinite; }
+
+/* ===== BOOK COVER 3D ===== */
+.book-scene {
+  perspective: 1200px;
   position: fixed;
-  top: -60px;
-  pointer-events: none;
+  inset: 0;
   z-index: 9999;
-  animation: petalFall linear forwards;
 }
 
-.timeline-line {
-  background: linear-gradient(180deg, #D4AF37 0%, #F5E06A 50%, #D4AF37 100%);
-}
-
-.floating-particle {
+.book-cover {
+  width: 100%;
+  height: 100%;
   position: absolute;
-  border-radius: 50%;
-  animation: float ease-in-out infinite;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 1.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  cursor: pointer;
 }
 
-/* Countdown box */
-.countdown-box {
-  background: linear-gradient(135deg, rgba(61,7,16,0.97) 0%, rgba(88,11,24,0.95) 100%);
-  border: 1.5px solid rgba(212,175,55,0.5);
-  border-radius: 16px;
-  animation: pulseGold 2.5s ease-in-out infinite;
-  backdrop-filter: blur(4px);
+.book-cover.opening {
+  transform: rotateY(-180deg);
 }
 
-/* Event cards */
-.event-card {
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 6px 30px rgba(88,11,24,0.1), 0 1px 0 rgba(212,175,55,0.2) inset;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* ===== SCROLL SNAP CAROUSEL ===== */
+.snap-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 1rem;
+  padding: 1rem 1.5rem 2rem;
 }
-.event-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(88,11,24,0.15), 0 1px 0 rgba(212,175,55,0.3) inset;
+.snap-carousel::-webkit-scrollbar { display: none; }
+
+.snap-card {
+  scroll-snap-align: start;
+  flex: 0 0 85vw;
+  max-width: 340px;
 }
 
-/* Wax seal */
-.wax-seal {
-  background: radial-gradient(ellipse at 30% 30%, #E8C84A 0%, #D4AF37 30%, #B8942A 60%, #8a6e1a 100%);
+/* ===== ORNATE DIVIDER ===== */
+.ornate-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem auto;
+  max-width: 320px;
+}
+.ornate-divider::before,
+.ornate-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+}
+
+/* ===== ARCH FRAME ===== */
+.arch-frame {
+  border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+  border: 4px solid #D4AF37;
   box-shadow:
-    0 0 0 3px #D4AF37,
-    0 0 0 6px rgba(212,175,55,0.25),
-    0 8px 32px rgba(0,0,0,0.5),
-    inset 0 2px 4px rgba(255,255,255,0.3);
-  animation: pulseGold 2s ease-in-out infinite;
+    0 0 0 2px #4A0404,
+    0 0 0 6px #D4AF37,
+    0 0 30px rgba(212,175,55,0.4),
+    inset 0 0 20px rgba(0,0,0,0.1);
+  overflow: hidden;
 }
 
-/* Portrait arch overflow */
-.portrait-arch { overflow: hidden; }
-
-/* ══════════════════════════════════════════════
-   MOBILE-FIRST RESPONSIVE OVERRIDES
-══════════════════════════════════════════════ */
-
-/* Prevent SVG-mandala overflow on tiny screens */
-@media (max-width: 480px) {
-  .mandala-bg { display: none; }
-
-  .hero-name {
-    font-size: 2.4rem !important;
-    line-height: 1.2 !important;
-  }
-  .section-title {
-    font-size: 1.9rem !important;
-  }
-  .couple-photo {
-    height: 300px !important;
-  }
-  .portrait-photo {
-    height: 220px !important;
-  }
-  .countdown-num {
-    font-size: 1.8rem !important;
-  }
+/* ===== TASSEL SCROLL ===== */
+.parchment-scroll {
+  background: linear-gradient(180deg, #FFF8DC 0%, #FDF5E6 50%, #FFF8DC 100%);
+  border: 2px solid #D4AF37;
+  border-radius: 0 0 12px 12px;
+  box-shadow:
+    0 8px 32px rgba(74,4,4,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  overflow: hidden;
+  transition: max-height 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease;
 }
 
-/* Safe area for iPhone notch */
-@supports (padding-top: env(safe-area-inset-top)) {
-  .safe-top    { padding-top: env(safe-area-inset-top); }
-  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+/* ===== GOLD BUTTON ===== */
+.btn-gold {
+  background: linear-gradient(135deg, #D4AF37, #F3E5AB, #D4AF37);
+  color: #4A0404;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border: 2px solid #B8860B;
+  border-radius: 50px;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212,175,55,0.6);
+}
+.btn-gold:active {
+  transform: translateY(0px);
+}
+
+/* ===== GOLD INPUT ===== */
+.input-gold {
+  background: rgba(255,245,245,0.9);
+  border: 1.5px solid #D4AF37;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #4A0404;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.input-gold:focus {
+  border-color: #F3E5AB;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.2);
+}
+
+/* ===== POLAROID CARD ===== */
+.polaroid {
+  background: white;
+  padding: 0.75rem 0.75rem 2.5rem;
+  box-shadow:
+    0 4px 20px rgba(74,4,4,0.2),
+    0 0 0 1px rgba(212,175,55,0.3);
+}
+
+/* ===== COUNTDOWN BOX ===== */
+.countdown-box {
+  background: rgba(74,4,4,0.9);
+  border: 1px solid rgba(212,175,55,0.5);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #4A0404;
+  color: #D4AF37;
+  font-family: 'Cinzel', serif;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  border: 1px solid #D4AF37;
+  transition: transform 0.4s ease;
+  z-index: 99999;
+}
+.toast.visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===== GLASS CARD ===== */
+.glass-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 16px;
+}
+
+/* ===== SECTION PADDING ===== */
+.section-pad {
+  padding: 4rem 1.5rem;
 }
