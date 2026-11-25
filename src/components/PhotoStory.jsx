@@ -1,80 +1,86 @@
-import { useRef, useState } from 'react'
+import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 
-const photos = [
+const photosData = [
   {
     src: '/images/couple.jpg',
-    caption: 'A Love Written in Stars 💫',
-    rotate: '-2deg',
-    alt: 'Bipin & Anjali together',
+    caption: 'A Love Written in the Stars 💫',
+    date: 'Bipin & Anjali',
   },
   {
     src: '/images/bride.jpg',
-    caption: 'She is the Melody 🌸',
-    rotate: '1.5deg',
-    alt: 'Anjali - The Bride',
+    caption: 'She is the Melody to His Song 🌸',
+    date: 'The Radiant Bride',
   },
   {
     src: '/images/groom.jpg',
-    caption: 'He is the Rhythm 🎵',
-    rotate: '-1deg',
-    alt: 'Bipin - The Groom',
+    caption: 'He is the Rhythm of Her Heart 🎵',
+    date: 'The Noble Groom',
   },
 ]
 
 export default function PhotoStory() {
-  const scrollRef = useRef(null)
   const [activeIdx, setActiveIdx] = useState(0)
+  const scrollRef = useRef(null)
 
   const handleScroll = () => {
-    const c = scrollRef.current
-    if (!c) return
-    const idx = Math.round(c.scrollLeft / (c.offsetWidth * 0.75 + 16))
-    setActiveIdx(Math.min(idx, photos.length - 1))
+    if (!scrollRef.current) return
+    const el = scrollRef.current
+    const itemWidth = el.offsetWidth * 0.75 + 16
+    const index = Math.round(el.scrollLeft / itemWidth)
+    setActiveIdx(Math.min(Math.max(0, index), photosData.length - 1))
+  }
+
+  const scrollToIndex = (idx) => {
+    if (!scrollRef.current) return
+    const el = scrollRef.current
+    const itemWidth = el.offsetWidth * 0.75 + 16
+    el.scrollTo({ left: idx * itemWidth, behavior: 'smooth' })
+    setActiveIdx(idx)
   }
 
   return (
-    <section style={{
-      background: 'linear-gradient(180deg, #FFF5F5 0%, #FCE4EC 50%, #FFF5F5 100%)',
-      padding: '4rem 0 3rem',
-      textAlign: 'center',
-    }}>
-      {/* Title */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
+    <section
+      style={{
+        padding: '3rem 0 4rem',
+        textAlign: 'center',
+        position: 'relative',
+        background: 'transparent',
+      }}
+    >
+      <motion.p
+        initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
         viewport={{ once: true }}
-        style={{ marginBottom: '2.5rem', padding: '0 1.5rem' }}
+        style={{
+          fontFamily: "'Cinzel', serif",
+          fontSize: '0.68rem',
+          letterSpacing: '0.3em',
+          color: '#8B1A2A',
+          textTransform: 'uppercase',
+          margin: '0 0 0.4rem',
+          fontWeight: 600,
+        }}
       >
-        <h2 className="font-playfair" style={{
-          fontSize: 'clamp(1.5rem, 6vw, 2.2rem)',
-          color: '#4A0404',
-          fontStyle: 'italic',
-          margin: '0 0 0.5rem',
-        }}>
-          Our Story
-        </h2>
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: '1rem',
-          maxWidth: '250px', margin: '0 auto',
-        }}>
-          <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, #D4AF37)' }}/>
-          <span style={{ color: '#D4AF37', fontSize: '1rem' }}>✦</span>
-          <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, #D4AF37, transparent)' }}/>
-        </div>
-        <p className="font-poppins" style={{
-          fontSize: '0.8rem',
-          color: '#6B0F1A',
-          opacity: 0.7,
-          margin: '0.75rem 0 0',
-          fontStyle: 'italic',
-        }}>
-          Swipe through our journey ♥
-        </p>
-      </motion.div>
+        OUR MOMENTS
+      </motion.p>
 
-      {/* Carousel */}
+      <motion.h2
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        viewport={{ once: true }}
+        style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: 'clamp(1.8rem, 6.5vw, 2.3rem)',
+          color: '#6B0F1A',
+          margin: '0 0 2rem',
+          fontWeight: 700,
+        }}
+      >
+        Our Story
+      </motion.h2>
+
       <div
         ref={scrollRef}
         onScroll={handleScroll}
@@ -84,91 +90,96 @@ export default function PhotoStory() {
           scrollSnapType: 'x mandatory',
           WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none',
-          gap: '1.5rem',
-          padding: '1rem 2rem 2rem',
+          gap: '16px',
+          padding: '0.5rem 1.5rem 1.5rem',
           alignItems: 'center',
         }}
       >
-        {photos.map((photo, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: i * 0.1 }}
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.03, rotate: '0deg' }}
-            style={{
-              scrollSnapAlign: 'center',
-              flex: '0 0 72vw',
-              maxWidth: '280px',
-              transform: `rotate(${photo.rotate})`,
-              transition: 'transform 0.3s ease',
-              cursor: 'pointer',
-            }}
-          >
-            {/* Polaroid card */}
-            <div style={{
-              background: 'white',
-              padding: '0.75rem 0.75rem 2.5rem',
-              boxShadow: '0 8px 30px rgba(74,4,4,0.2), 0 2px 8px rgba(0,0,0,0.1), 0 0 0 1px rgba(212,175,55,0.3)',
-              borderRadius: '2px',
-            }}>
-              <div style={{
-                width: '100%',
-                paddingTop: '125%',
-                position: 'relative',
-                overflow: 'hidden',
-                borderRadius: '1px',
-              }}>
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    objectPosition: 'top center',
-                    display: 'block',
-                  }}
-                />
-                {/* Soft overlay */}
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  background: 'linear-gradient(180deg, transparent 70%, rgba(255,245,245,0.1) 100%)',
-                }}/>
-              </div>
-
-              {/* Caption */}
-              <p className="font-playfair" style={{
-                fontFamily: 'Playfair Display, serif',
-                fontSize: '0.9rem',
-                fontStyle: 'italic',
-                color: '#4A0404',
-                margin: '0.6rem 0 0',
-                textAlign: 'center',
-                lineHeight: 1.4,
-              }}>
-                {photo.caption}
-              </p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Pagination dots */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
-        {photos.map((_, i) => (
+        {photosData.map((item, i) => (
           <div
             key={i}
             style={{
-              width: activeIdx === i ? '20px' : '8px',
-              height: '8px',
-              borderRadius: '4px',
-              background: activeIdx === i
-                ? 'linear-gradient(90deg, #D4AF37, #B8860B)'
-                : 'rgba(212,175,55,0.35)',
+              flex: '0 0 74vw',
+              maxWidth: '280px',
+              scrollSnapAlign: 'center',
+              borderRadius: '16px',
+              background: '#FFFFFF',
+              boxShadow: '0 12px 30px rgba(107, 15, 26, 0.1), 0 2px 6px rgba(0,0,0,0.04)',
+              overflow: 'hidden',
+              padding: '12px 12px 18px',
+              border: '1px solid rgba(212, 175, 55, 0.3)',
+              transform: i === 0 ? 'rotate(-1.5deg)' : i === 1 ? 'rotate(1deg)' : 'rotate(-1deg)',
+              transition: 'transform 0.3s ease',
+            }}
+          >
+            {/* Photo Box */}
+            <div
+              style={{
+                width: '100%',
+                height: '310px',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                backgroundColor: '#F7F7F7',
+                marginBottom: '14px',
+              }}
+            >
+              <img
+                src={item.src}
+                alt={item.caption}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'top center',
+                  display: 'block',
+                }}
+              />
+            </div>
+
+            {/* Polaroid Caption */}
+            <p
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontStyle: 'italic',
+                fontSize: '0.9rem',
+                color: '#6B0F1A',
+                margin: '0 0 4px',
+                lineHeight: 1.35,
+              }}
+            >
+              {item.caption}
+            </p>
+
+            <p
+              style={{
+                fontFamily: "'Cinzel', serif",
+                fontSize: '0.65rem',
+                letterSpacing: '0.15em',
+                color: '#B8860B',
+                margin: 0,
+              }}
+            >
+              {item.date}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Dots indicator */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginTop: '0.5rem' }}>
+        {photosData.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => scrollToIndex(i)}
+            aria-label={`Go to photo ${i + 1}`}
+            style={{
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer',
+              height: '6px',
+              width: activeIdx === i ? '18px' : '6px',
+              borderRadius: '3px',
+              backgroundColor: activeIdx === i ? '#6B0F1A' : 'rgba(107, 15, 26, 0.2)',
               transition: 'all 0.3s ease',
             }}
           />

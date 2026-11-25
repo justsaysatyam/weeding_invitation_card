@@ -1,129 +1,148 @@
-import { useRef, useState } from 'react'
+import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 
-const events = [
+const functionsData = [
   {
-    emoji: '🍽️',
-    name: 'Khaan Peen',
-    hindi: 'खान पान',
-    date: '07 December 2026',
-    day: 'Sunday',
-    time: 'Evening Onwards',
-    venue: 'Jha Residence, Vill + PO Jagatpur\nMadhubani, Bihar',
-    dress: 'Traditional Festive',
-    dressColor: '#D4AF37',
-    gradient: 'linear-gradient(135deg, #6B0F1A 0%, #4A0404 60%, #3D0303 100%)',
-    desc: 'Warm pre-wedding feast',
+    id: 'khaan-peen',
+    title: 'Khaan Peen',
+    hindi: 'खान पान एवं प्री-वेडिंग भोज',
+    dateTime: 'SUN • 07 DEC • 6:00 PM ONWARDS',
+    venue: 'Jha Residence, Vill + PO Jagatpur, Madhubani',
+    headerBg: 'linear-gradient(135deg, #FF8C42 0%, #F57C00 100%)',
+    dressCode: 'Traditional Festive',
+    dressColor: '#F57C00',
+    icon: (
+      <svg viewBox="0 0 40 40" width="30" height="30" fill="none">
+        <circle cx="20" cy="20" r="16" stroke="#D35400" strokeWidth="2" fill="#FFE0B2" />
+        <circle cx="20" cy="20" r="10" stroke="#E65100" strokeWidth="1.5" strokeDasharray="2 2" />
+        <circle cx="16" cy="18" r="2.5" fill="#E65100" />
+        <circle cx="24" cy="18" r="2.5" fill="#E65100" />
+        <circle cx="20" cy="24" r="2.5" fill="#E65100" />
+      </svg>
+    ),
   },
   {
-    emoji: '🌼',
-    name: 'Haldi & Mehendi',
-    hindi: 'हल्दी & मेहंदी',
-    date: '08 December 2026',
-    day: 'Monday',
-    time: '10:00 AM Onwards',
-    venue: 'Jha Residence, Vill + PO Jagatpur\nMadhubani, Bihar',
-    dress: 'Yellow / Green',
-    dressColor: '#D4C137',
-    gradient: 'linear-gradient(135deg, #5D3A00 0%, #7A4F00 60%, #9C6400 100%)',
-    desc: 'Sacred beauty ceremony',
+    id: 'haldi',
+    title: 'Haldi & Mehendi',
+    hindi: 'हल्दी एवं मेहंदी उत्सव',
+    dateTime: 'MON • 08 DEC • 10:00 AM ONWARDS',
+    venue: 'Jha Residence Courtyard, Vill Jagatpur, Madhubani',
+    headerBg: 'linear-gradient(135deg, #FFD54F 0%, #FFB300 100%)',
+    dressCode: 'Wear Yellow / Green',
+    dressColor: '#FBC02D',
+    icon: (
+      <svg viewBox="0 0 40 40" width="30" height="30" fill="none">
+        <ellipse cx="20" cy="22" rx="14" ry="10" fill="#FFF9C4" stroke="#F57F17" strokeWidth="2" />
+        <path d="M12 20 Q20 28 28 20" stroke="#F57F17" strokeWidth="2" fill="#FBC02D" />
+        <circle cx="20" cy="16" r="4" fill="#F57F17" />
+        <circle cx="16" cy="14" r="2" fill="#FBC02D" />
+        <circle cx="24" cy="14" r="2" fill="#FBC02D" />
+      </svg>
+    ),
   },
   {
-    emoji: '🐴',
-    name: 'Baraat Prasthan',
-    hindi: 'बारात प्रस्थान',
-    date: '09 December 2026',
-    day: 'Wednesday',
-    time: 'Morning',
-    venue: 'From: Vill + PO Jagatpur\nMadhubani, Bihar',
-    dress: 'Royal Sherwani',
-    dressColor: '#C0A060',
-    gradient: 'linear-gradient(135deg, #1A0A6B 0%, #0F0F4A 60%, #030348 100%)',
-    desc: 'The royal procession begins',
+    id: 'baraat',
+    title: 'Baraat Prasthan',
+    hindi: 'शाही बारात प्रस्थान',
+    dateTime: 'WED • 09 DEC • MORNING 9:00 AM',
+    venue: 'From Jagatpur to Dehat, Block Rajnagar',
+    headerBg: 'linear-gradient(135deg, #3F51B5 0%, #1A237E 100%)',
+    dressCode: 'Royal Sherwani / Kurta',
+    dressColor: '#3F51B5',
+    icon: (
+      <svg viewBox="0 0 40 40" width="30" height="30" fill="none">
+        <circle cx="20" cy="20" r="16" fill="#E8EAF6" stroke="#1A237E" strokeWidth="2" />
+        <path d="M14 26 L18 16 L24 16 L27 22 L22 26 Z" fill="#3F51B5" />
+        <circle cx="24" cy="14" r="3" fill="#D4AF37" />
+        <path d="M26 12 L30 8" stroke="#D4AF37" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
   },
   {
-    emoji: '🪔',
-    name: 'Shubh Vivah',
-    hindi: 'शुभ विवाह',
-    date: '09 December 2026',
-    day: 'Wednesday',
-    time: 'Shubh Muhurat',
-    venue: 'Vill + PO Dehat, Block + PS Rajnagar\nDist Madhubani, Bihar',
-    dress: 'Bridal / Sherwani',
-    dressColor: '#FF6B9D',
-    gradient: 'linear-gradient(135deg, #6B0F1A 0%, #8B1A2A 50%, #4A0404 100%)',
-    desc: 'The sacred union ceremony',
+    id: 'vivah',
+    title: 'Shubh Vivah',
+    hindi: 'पाणिग्रहण संस्कार एवं सात फेरे',
+    dateTime: 'WED • 09 DEC • SHUBH MUHURAT',
+    venue: 'Vill + PO Dehat, Block Rajnagar, Dist Madhubani',
+    headerBg: 'linear-gradient(135deg, #8B1A2A 0%, #4A0404 100%)',
+    dressCode: 'Bridal & Traditional Silk',
+    dressColor: '#8B1A2A',
+    icon: (
+      <svg viewBox="0 0 40 40" width="30" height="30" fill="none">
+        <circle cx="20" cy="20" r="16" fill="#FFEBEE" stroke="#8B1A2A" strokeWidth="2" />
+        <path d="M12 28 L28 28 L24 24 L16 24 Z" fill="#D4AF37" />
+        <path d="M20 12 C18 16 15 18 18 24 C20 22 23 20 20 12 Z" fill="#E53935" />
+        <circle cx="20" cy="19" r="2.5" fill="#FFD54F" />
+      </svg>
+    ),
   },
 ]
 
 export default function FestivitiesCarousel() {
-  const scrollRef = useRef(null)
   const [activeIdx, setActiveIdx] = useState(0)
-
-  const scrollTo = (idx) => {
-    const container = scrollRef.current
-    if (!container) return
-    const cards = container.querySelectorAll('.festivity-card')
-    if (cards[idx]) {
-      cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
-      setActiveIdx(idx)
-    }
-  }
+  const scrollRef = useRef(null)
 
   const handleScroll = () => {
-    const container = scrollRef.current
-    if (!container) return
-    const scrollLeft = container.scrollLeft
-    const cardWidth = container.offsetWidth * 0.85 + 16
-    const idx = Math.round(scrollLeft / cardWidth)
-    setActiveIdx(Math.min(idx, events.length - 1))
+    if (!scrollRef.current) return
+    const el = scrollRef.current
+    const itemWidth = el.offsetWidth * 0.82 + 16
+    const index = Math.round(el.scrollLeft / itemWidth)
+    setActiveIdx(Math.min(Math.max(0, index), functionsData.length - 1))
+  }
+
+  const scrollToIndex = (idx) => {
+    if (!scrollRef.current) return
+    const el = scrollRef.current
+    const itemWidth = el.offsetWidth * 0.82 + 16
+    el.scrollTo({ left: idx * itemWidth, behavior: 'smooth' })
+    setActiveIdx(idx)
   }
 
   return (
-    <section style={{
-      background: 'linear-gradient(180deg, #4A0404 0%, #2D0202 50%, #4A0404 100%)',
-      padding: '4rem 0 3rem',
-      position: 'relative',
-      overflow: 'hidden',
-    }}>
-      {/* Background mandala */}
-      <div style={{
-        position: 'absolute', top: '50%', left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '400px', height: '400px',
-        borderRadius: '50%',
-        border: '1px solid rgba(212,175,55,0.1)',
-        pointerEvents: 'none',
-      }}/>
-
-      {/* Section title */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
+    <section
+      style={{
+        padding: '3.5rem 0 4rem',
+        textAlign: 'center',
+        position: 'relative',
+        background: 'transparent',
+      }}
+    >
+      {/* Top Label matching Frame 14 */}
+      <motion.p
+        initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
         viewport={{ once: true }}
-        style={{ textAlign: 'center', marginBottom: '2rem', padding: '0 1.5rem' }}
+        style={{
+          fontFamily: "'Cinzel', serif",
+          fontSize: '0.68rem',
+          letterSpacing: '0.3em',
+          color: '#8B1A2A',
+          textTransform: 'uppercase',
+          margin: '0 0 0.4rem',
+          fontWeight: 600,
+        }}
       >
-        <h2 className="font-cinzel" style={{
-          fontSize: 'clamp(1.1rem, 4vw, 1.5rem)',
-          letterSpacing: '0.2em',
-          color: '#D4AF37',
-          margin: 0,
-        }}>
-          ✦ WEDDING FESTIVITIES ✦
-        </h2>
-        <p className="font-poppins" style={{
-          fontSize: '0.8rem',
-          color: 'rgba(243,229,171,0.7)',
-          marginTop: '0.5rem',
-          fontStyle: 'italic',
-        }}>
-          Swipe to explore all events
-        </p>
-      </motion.div>
+        SWIPE THROUGH THE CELEBRATIONS
+      </motion.p>
 
-      {/* Carousel */}
+      {/* Main Heading matching Frame 14 */}
+      <motion.h2
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        viewport={{ once: true }}
+        style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: 'clamp(1.8rem, 6.5vw, 2.3rem)',
+          color: '#6B0F1A',
+          margin: '0 0 2rem',
+          fontWeight: 700,
+        }}
+      >
+        Wedding Festivities
+      </motion.h2>
+
+      {/* Horizontal Snap Carousel matching Video Frame 14 & 15 */}
       <div
         ref={scrollRef}
         onScroll={handleScroll}
@@ -133,141 +152,139 @@ export default function FestivitiesCarousel() {
           scrollSnapType: 'x mandatory',
           WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none',
-          gap: '1rem',
-          padding: '0.5rem 1.5rem 1rem',
+          gap: '16px',
+          padding: '0.5rem 1.5rem 1.5rem',
         }}
-        className="snap-carousel-hide"
       >
-        {events.map((event, i) => (
+        {functionsData.map((f, i) => (
           <div
-            key={i}
-            className="festivity-card"
+            key={f.id}
             style={{
-              scrollSnapAlign: 'start',
-              flex: '0 0 85vw',
-              maxWidth: '340px',
-              borderRadius: '20px',
+              flex: '0 0 82vw',
+              maxWidth: '310px',
+              scrollSnapAlign: 'center',
+              borderRadius: '24px',
+              background: '#FFFFFF',
+              boxShadow: '0 12px 36px rgba(107, 15, 26, 0.08), 0 2px 8px rgba(0,0,0,0.04)',
               overflow: 'hidden',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-              border: '1px solid rgba(212,175,55,0.3)',
-              background: '#1A0101',
+              textAlign: 'center',
+              border: '1px solid rgba(212, 175, 55, 0.25)',
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
-            {/* Card header */}
-            <div style={{
-              background: event.gradient,
-              padding: '1.75rem 1.5rem 1.5rem',
-              textAlign: 'center',
-              position: 'relative',
-            }}>
-              {/* Top gold line */}
-              <div style={{
-                position: 'absolute', top: 0, left: 0, right: 0, height: '3px',
-                background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)',
-              }}/>
-
-              <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{event.emoji}</div>
-
-              <h3 className="font-cinzel" style={{
-                fontSize: '1.1rem',
-                letterSpacing: '0.1em',
-                color: '#D4AF37',
-                margin: '0 0 0.2rem',
-                fontWeight: 700,
-              }}>
-                {event.name}
-              </h3>
-              <p className="font-playfair" style={{
-                fontSize: '0.9rem',
-                color: 'rgba(243,229,171,0.8)',
-                margin: '0 0 0.5rem',
-                fontStyle: 'italic',
-              }}>
-                {event.hindi}
-              </p>
-              <p className="font-poppins" style={{
-                fontSize: '0.75rem',
-                color: 'rgba(255,255,255,0.6)',
-                margin: 0,
-                fontStyle: 'italic',
-              }}>
-                {event.desc}
-              </p>
+            {/* Colorful Top Banner with Circular Floating Icon */}
+            <div
+              style={{
+                background: f.headerBg,
+                height: '110px',
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {/* Floating circular icon badge */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '-24px',
+                  width: '56px',
+                  height: '56px',
+                  borderRadius: '50%',
+                  background: '#FFFFFF',
+                  boxShadow: '0 6px 16px rgba(0,0,0,0.12)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '2px solid #FFF',
+                }}
+              >
+                {f.icon}
+              </div>
             </div>
 
-            {/* Card body */}
-            <div style={{ padding: '1.25rem 1.5rem 1.5rem', background: '#1A0101' }}>
-              {/* Date & Time pills */}
-              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
-                <span style={{
-                  fontFamily: 'Cinzel, serif',
-                  fontSize: '0.7rem',
-                  background: 'rgba(212,175,55,0.15)',
-                  border: '1px solid rgba(212,175,55,0.4)',
-                  color: '#D4AF37',
-                  borderRadius: '20px',
-                  padding: '0.3rem 0.75rem',
-                  letterSpacing: '0.05em',
-                }}>
-                  📅 {event.date}
-                </span>
-                <span style={{
-                  fontFamily: 'Poppins, sans-serif',
-                  fontSize: '0.7rem',
-                  background: 'rgba(212,175,55,0.1)',
-                  border: '1px solid rgba(212,175,55,0.3)',
-                  color: '#F3E5AB',
-                  borderRadius: '20px',
-                  padding: '0.3rem 0.75rem',
-                }}>
-                  🕐 {event.time}
-                </span>
-              </div>
-
-              {/* Venue */}
-              <div style={{ marginBottom: '1rem' }}>
-                <p className="font-poppins" style={{
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.1em',
-                  color: 'rgba(212,175,55,0.7)',
-                  textTransform: 'uppercase',
-                  margin: '0 0 0.3rem',
-                }}>
-                  Venue
-                </p>
-                <p className="font-poppins" style={{
-                  fontSize: '0.8rem',
-                  color: 'rgba(243,229,171,0.9)',
-                  margin: 0,
-                  lineHeight: 1.6,
-                  whiteSpace: 'pre-line',
-                }}>
-                  {event.venue}
-                </p>
-              </div>
-
-              {/* Dress code badge */}
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                background: `linear-gradient(135deg, ${event.dressColor}20, ${event.dressColor}10)`,
-                border: `1px solid ${event.dressColor}50`,
-                borderRadius: '20px',
-                padding: '0.35rem 1rem',
-              }}>
-                <div style={{
-                  width: '8px', height: '8px', borderRadius: '50%',
-                  background: event.dressColor,
-                }}/>
-                <span style={{
-                  fontFamily: 'Cinzel, serif',
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.08em',
-                  color: event.dressColor,
+            {/* Card Content */}
+            <div style={{ padding: '2.2rem 1.25rem 1.75rem', flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <p
+                style={{
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: '0.68rem',
+                  letterSpacing: '0.12em',
+                  color: '#8B1A2A',
                   fontWeight: 600,
-                }}>
-                  Dress Code: {event.dress}
+                  margin: '0 0 0.5rem',
+                }}
+              >
+                {f.dateTime}
+              </p>
+
+              <h3
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '1.45rem',
+                  color: '#6B0F1A',
+                  fontWeight: 700,
+                  margin: '0 0 0.2rem',
+                }}
+              >
+                {f.title}
+              </h3>
+
+              <p
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontStyle: 'italic',
+                  fontSize: '0.85rem',
+                  color: '#B8860B',
+                  margin: '0 0 0.75rem',
+                }}
+              >
+                {f.hindi}
+              </p>
+
+              <p
+                style={{
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: '0.78rem',
+                  color: '#666',
+                  lineHeight: 1.45,
+                  margin: '0 0 1.25rem',
+                }}
+              >
+                {f.venue}
+              </p>
+
+              {/* Styled Dress Code Badge matching Frame 14 */}
+              <div
+                style={{
+                  marginTop: 'auto',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '0.45rem 1rem',
+                  borderRadius: '12px',
+                  background: 'rgba(0, 0, 0, 0.03)',
+                  border: '1px solid rgba(0, 0, 0, 0.06)',
+                }}
+              >
+                <div
+                  style={{
+                    width: '18px',
+                    height: '18px',
+                    borderRadius: '5px',
+                    backgroundColor: f.dressColor,
+                  }}
+                />
+                <span
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: '0.72rem',
+                    color: '#444',
+                    fontWeight: 500,
+                  }}
+                >
+                  <strong style={{ color: '#222' }}>DRESS CODE:</strong> {f.dressCode}
                 </span>
               </div>
             </div>
@@ -275,59 +292,40 @@ export default function FestivitiesCarousel() {
         ))}
       </div>
 
-      {/* Nav buttons */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', margin: '0.5rem 0 1rem' }}>
-        <button
-          onClick={() => scrollTo(Math.max(0, activeIdx - 1))}
-          disabled={activeIdx === 0}
-          style={{
-            width: '40px', height: '40px', borderRadius: '50%',
-            background: activeIdx === 0 ? 'rgba(212,175,55,0.2)' : 'linear-gradient(135deg, #D4AF37, #B8860B)',
-            border: '1px solid rgba(212,175,55,0.5)',
-            color: activeIdx === 0 ? 'rgba(212,175,55,0.5)' : '#4A0404',
-            cursor: activeIdx === 0 ? 'not-allowed' : 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          <ChevronLeft size={18}/>
-        </button>
-        <button
-          onClick={() => scrollTo(Math.min(events.length - 1, activeIdx + 1))}
-          disabled={activeIdx === events.length - 1}
-          style={{
-            width: '40px', height: '40px', borderRadius: '50%',
-            background: activeIdx === events.length - 1 ? 'rgba(212,175,55,0.2)' : 'linear-gradient(135deg, #D4AF37, #B8860B)',
-            border: '1px solid rgba(212,175,55,0.5)',
-            color: activeIdx === events.length - 1 ? 'rgba(212,175,55,0.5)' : '#4A0404',
-            cursor: activeIdx === events.length - 1 ? 'not-allowed' : 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          <ChevronRight size={18}/>
-        </button>
-      </div>
-
-      {/* Pagination dots */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
-        {events.map((_, i) => (
+      {/* Pagination indicators matching Frame 14 */}
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px', margin: '0.75rem 0 0.5rem' }}>
+        {functionsData.map((_, i) => (
           <button
             key={i}
-            onClick={() => scrollTo(i)}
+            onClick={() => scrollToIndex(i)}
+            aria-label={`Go to slide ${i + 1}`}
             style={{
-              width: activeIdx === i ? '20px' : '8px',
-              height: '8px',
-              borderRadius: '4px',
-              background: activeIdx === i
-                ? 'linear-gradient(90deg, #D4AF37, #F3E5AB)'
-                : 'rgba(212,175,55,0.3)',
               border: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
               padding: 0,
+              cursor: 'pointer',
+              height: '6px',
+              width: activeIdx === i ? '20px' : '6px',
+              borderRadius: '3px',
+              backgroundColor: activeIdx === i ? '#6B0F1A' : 'rgba(107, 15, 26, 0.2)',
+              transition: 'all 0.3s ease',
             }}
           />
         ))}
       </div>
+
+      {/* Swipe prompt matching Frame 14 */}
+      <p
+        style={{
+          fontFamily: "'Poppins', sans-serif",
+          fontSize: '0.65rem',
+          letterSpacing: '0.15em',
+          color: '#8B1A2A',
+          opacity: 0.7,
+          margin: '0.5rem 0 0',
+        }}
+      >
+        &lt;&gt; SWIPE TO SEE EVERY FUNCTION &lt;&gt;
+      </p>
     </section>
   )
 }

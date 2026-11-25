@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Volume2, VolumeX, Music } from 'lucide-react'
+import { VolumeX } from 'lucide-react'
 
 export default function AudioPlayer({ shouldPlay }) {
   const [playing, setPlaying] = useState(false)
@@ -15,67 +15,116 @@ export default function AudioPlayer({ shouldPlay }) {
       hasStarted.current = true
       audio.volume = 0
       audio.loop = true
-      const playPromise = audio.play()
-      if (playPromise) {
-        playPromise
-          .then(() => {
-            setPlaying(true)
-            // Fade in volume
-            let vol = 0
-            const fade = setInterval(() => {
-              vol = Math.min(vol + 0.05, 0.4)
-              audio.volume = vol
-              if (vol >= 0.4) clearInterval(fade)
-            }, 150)
-          })
-          .catch(() => {
-            // Autoplay blocked — user will need to tap manually
-          })
+      const p = audio.play()
+      if (p) {
+        p.then(() => {
+          setPlaying(true)
+          let v = 0
+          const timer = setInterval(() => {
+            v = Math.min(v + 0.05, 0.5)
+            audio.volume = v
+            if (v >= 0.5) clearInterval(timer)
+          }, 150)
+        }).catch(() => {
+          // Autoplay policy: user interaction will trigger
+        })
       }
     }
   }, [shouldPlay])
 
-  const toggleMute = () => {
+  const toggleSound = () => {
     const audio = audioRef.current
     if (!audio) return
     if (!hasStarted.current) {
       hasStarted.current = true
-      audio.volume = 0.35
+      audio.volume = 0.5
       audio.loop = true
       audio.play().then(() => setPlaying(true)).catch(() => {})
+      setMuted(false)
+      return
     }
-    audio.muted = !audio.muted
-    setMuted(audio.muted)
+
+    if (audio.paused) {
+      audio.play().then(() => {
+        setPlaying(true)
+        setMuted(false)
+      })
+    } else {
+      audio.muted = !audio.muted
+      setMuted(audio.muted)
+    }
   }
+
+  const isBarAnimated = playing && !muted
 
   return (
     <>
       <audio ref={audioRef} src="/audio/shehnai.mp3" loop preload="auto" />
       <button
-        onClick={toggleMute}
-        title={muted ? 'Unmute Music' : 'Mute Music'}
+        onClick={toggleSound}
+        title={muted ? 'Play Music' : 'Mute Music'}
+        aria-label="Toggle Music"
         style={{
           position: 'fixed',
-          top: '1rem',
-          right: '1rem',
-          zIndex: 99999,
-          width: '48px',
-          height: '48px',
+          bottom: '1.25rem',
+          right: '1.25rem',
+          zIndex: 9999,
+          width: '44px',
+          height: '44px',
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #D4AF37, #F3E5AB)',
-          border: '2px solid rgba(74,4,4,0.3)',
+          background: 'rgba(255, 255, 255, 0.92)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          border: '1px solid rgba(212, 175, 55, 0.4)',
+          boxShadow: '0 4px 16px rgba(107, 15, 26, 0.15)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
-          boxShadow: '0 4px 15px rgba(212,175,55,0.5)',
-          animation: 'floatBob 3s ease-in-out infinite',
+          padding: 0,
         }}
       >
         {muted ? (
-          <VolumeX size={20} color="#4A0404" />
+          <VolumeX size={18} color="#6B0F1A" />
         ) : (
-          <Volume2 size={20} color="#4A0404" />
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '16px' }}>
+            <span
+              style={{
+                width: '3px',
+                height: isBarAnimated ? '14px' : '6px',
+                backgroundColor: '#6B0F1A',
+                borderRadius: '2px',
+                animation: isBarAnimated ? 'equalizer1 0.8s ease-in-out infinite alternate' : 'none',
+              }}
+            />
+            <span
+              style={{
+                width: '3px',
+                height: isBarAnimated ? '18px' : '10px',
+                backgroundColor: '#6B0F1A',
+                borderRadius: '2px',
+                animation: isBarAnimated ? 'equalizer2 0.6s ease-in-out infinite alternate 0.2s' : 'none',
+              }}
+            />
+            <span
+              style={{
+                width: '3px',
+                height: isBarAnimated ? '12px' : '5px',
+                backgroundColor: '#6B0F1A',
+                borderRadius: '2px',
+                animation: isBarAnimated ? 'equalizer3 0.7s ease-in-out infinite alternate 0.4s' : 'none',
+              }}
+            />
+            <span
+              style={{
+                width: '3px',
+                height: isBarAnimated ? '16px' : '8px',
+                backgroundColor: '#6B0F1A',
+                borderRadius: '2px',
+                animation: isBarAnimated ? 'equalizer2 0.9s ease-in-out infinite alternate 0.1s' : 'none',
+              }}
+            />
+          </div>
         )}
       </button>
     </>
